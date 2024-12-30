@@ -2,6 +2,15 @@
     <div id="frame">
         @include('layouts.sidebar')
         <div class="content">
+            <div class="loader d-none">
+                <div class="loader-inner">
+                    <l-dot-spinner
+                        size="40"
+                        speed="0.9"
+                        color="green"
+                    ></l-dot-spinner>
+                </div>
+            </div>
             <div class="contact-profile">
                 <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
                 <p>Harvey Specter</p>
