@@ -22,6 +22,16 @@ function fetchMessages() {
         },
         success: function (data) {
             setSelectedUserInfo(data.user);
+
+            // append messages to DOM
+            inbox.empty();
+            data.messages.forEach(value => {
+                if(value.sender_id == userId){
+                    inbox.append(messageTemplate(value.message, 'sent'));
+                }else{
+                    inbox.append(messageTemplate(value.message, 'replies'));
+                }
+            })
         },
         error: function (xhr, status, error) {},
         complete: function () {
@@ -57,6 +67,9 @@ $(document).ready(function () {
     $('.contact').on('click', function () {
         let userId = $(this).data('id');
         selectedUser.attr('content', userId);
+
+        // hide the blank wrap
+        $('.blank-wrap').addClass('d-none');
 
         // fetch messages
         fetchMessages();

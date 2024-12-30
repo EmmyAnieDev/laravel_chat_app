@@ -36,8 +36,12 @@ class ChatController extends Controller
 
         $user = User::findOrFail($request->user_id);
 
+        $messages = Message::where('sender_id', Auth::user()->id)->where('receiver_id', $request->user_id)
+           ->orWhere('sender_id', $request->user_id)->where('receiver_id', Auth::user()->id)->get();
+
         return response()->json([
             'user' => $user,
+            'messages' => $messages
         ]);
     }
 

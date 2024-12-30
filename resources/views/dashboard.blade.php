@@ -2,6 +2,9 @@
     <div id="frame">
         @include('layouts.sidebar')
         <div class="content">
+            <div class="blank-wrap">
+                <div class="inner-blank-wrap">Select a user to start messaging</div>
+            </div>
             <div class="loader d-none">
                 <div class="loader-inner">
                     <l-dot-spinner
@@ -20,8 +23,7 @@
             </div>
             <div class="messages">
                 <ul>
-                    <x-message class="sent" text="Hello how're you?" />
-                    <x-message class="replies" text="I'm doing well. You?" />
+{{--                   Dynamic content will go here --}}
                 </ul>
             </div>
             <div class="message-input">
