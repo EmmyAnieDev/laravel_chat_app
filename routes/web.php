@@ -16,4 +16,7 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/dashboard', [ChatController::class, 'index'])->name('dashboard')->middleware('auth', 'verified');
 
+/** Message Routes */
+Route::get('/fetch-messages', [ChatController::class, 'fetchMessages'])->name('fetch-messages')->middleware('auth');
+
 require __DIR__.'/auth.php';

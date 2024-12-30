@@ -12,8 +12,8 @@
                 </div>
             </div>
             <div class="contact-profile">
-                <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-                <p>Harvey Specter</p>
+                <img src="{{ asset('default-image/avatar.jpeg') }}" alt="" />
+                <p class="selected-user-name"></p>
                 <div class="social-media">
 
                 </div>
@@ -66,6 +66,6 @@
     </div>
 
     <x-slot name="scripts">
-        @vite(['resources/js/app.js'])
+        @vite(['resources/js/app.js', 'resources/js/message.js'])
     </x-slot>
 </x-app-layout>

@@ -14,4 +14,25 @@ class ChatController extends Controller
 
         return view('dashboard', compact('users'));
     }
+
+
+    /**
+     * Fetch the authenticated user's details and their associated messages.
+     *
+     * This function retrieves a user's information from the database based on the provided `user_id`.
+     * Additionally, it fetches all messages associated with the user through a defined relationship.
+     * The data is returned as a JSON response, including the user's details and a list of their messages.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     *
+     */
+    function fetchMessages(Request $request) {
+
+        $user = User::findOrFail($request->user_id);
+
+        return response()->json([
+            'user' => $user,
+        ]);
+    }
 }
