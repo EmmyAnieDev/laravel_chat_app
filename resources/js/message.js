@@ -33,6 +33,8 @@ function fetchMessages() {
                     inbox.append(messageTemplate(value.message, 'replies'));
                 }
             })
+
+            scrollToBottom()
         },
         error: function (xhr, status, error) {},
         complete: function () {
@@ -54,13 +56,22 @@ function sendMessage() {
             inbox.append(messageTemplate(message, 'replies'));
             messageField.val('');
         },
-        success: function () { },
+        success: function () {
+
+            scrollToBottom()
+        },
         error: function (xhr, status, error) {},
     })
 }
 
 function setSelectedUserInfo(user) {
     $('.selected-user-name').text(user.name);
+}
+
+function scrollToBottom() {
+    $('.messages').stop().animate({
+        scrollTop: $('.messages')[0].scrollHeight
+    })
 }
 
 $(document).ready(function () {
@@ -88,6 +99,7 @@ window.Echo.private('chat.' + authUserId)
     .listen('SendMessageEvent', (event) => {
         if(event.senderId == selectedUser.attr('content')) {
             inbox.append(messageTemplate(event.message, 'sent'));
+            scrollToBottom()
         }
     });
 
