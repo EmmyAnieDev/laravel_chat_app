@@ -1,5 +1,6 @@
 const selectedUser = $('meta[name="selected_user"]');
 const baseUrl = $('meta[name="base_url"]').attr('content');
+const authUserId = $('meta[name="auth_user_id"]').attr('content');
 const inbox = $('.messages ul');
 
 
@@ -80,3 +81,13 @@ $(document).ready(function () {
         sendMessage();
     })
 })
+
+// Listen to live events.
+// You're always listening to your own channel.
+window.Echo.private('chat.' + authUserId)
+    .listen('SendMessageEvent', (event) => {
+        if(event.senderId == selectedUser.attr('content')) {
+            inbox.append(messageTemplate(event.message, 'sent'));
+        }
+    });
+

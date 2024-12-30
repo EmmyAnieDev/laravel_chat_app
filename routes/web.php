@@ -14,7 +14,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/dashboard', [ChatController::class, 'index'])->name('dashboard')->middleware('auth', 'verified');
+Route::get('/dashboard', [ChatController::class, 'listUsersForChat'])->name('dashboard')->middleware('auth', 'verified');
 
 /** Message Routes */
 Route::middleware('auth')->group(function () {

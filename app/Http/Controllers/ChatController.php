@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SendMessageEvent;
 use App\Http\Requests\SendMessageRequest;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\Mailer\Event\MessageEvent;
 use function Symfony\Component\String\s;
 
 class ChatController extends Controller
 {
-    function index()
+    function listUsersForChat()
     {
-
-        $users = User::where('id', '!=', auth()->user()->id)->get();
+        $users = User::where('id', '!=', Auth::user()->id)->get();
 
         return view('dashboard', compact('users'));
     }
@@ -54,6 +55,8 @@ class ChatController extends Controller
             'receiver_id' => $request->user_id,
             'message' => $request->message,
         ]);
+
+        event(new SendMessageEvent($request->message, Auth::user()->id , $request->user_id));
 
         return response()->json([
             'success' => true,
