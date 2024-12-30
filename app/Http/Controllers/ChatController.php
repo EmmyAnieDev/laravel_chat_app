@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SendMessageRequest;
+use App\Models\Message;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use function Symfony\Component\String\s;
 
 class ChatController extends Controller
 {
-    function index() {
+    function index()
+    {
 
         $users = User::where('id', '!=', auth()->user()->id)->get();
 
@@ -27,7 +31,8 @@ class ChatController extends Controller
      * @return \Illuminate\Http\JsonResponse
      *
      */
-    function fetchMessages(Request $request) {
+    function fetchMessages(Request $request)
+    {
 
         $user = User::findOrFail($request->user_id);
 
@@ -35,4 +40,21 @@ class ChatController extends Controller
             'user' => $user,
         ]);
     }
+
+
+    function sendMessage(SendMessageRequest $request)
+    {
+
+        $message = Message::create([
+            'sender_id' => Auth::user()->id,
+            'receiver_id' => $request->user_id,
+            'message' => $request->message,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => $message,
+        ]);
+    }
+
 }
